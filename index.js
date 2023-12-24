@@ -11,7 +11,12 @@ app.use(express.json({ limit: "10mb" }));
 
 const PORT = process.env.PORT || 8080;
 
+
+// USING NODE CACHE CHO GIẢM THỜI GIAN LẤY DỮ LIỆU TỪ DB QUA BE GỬI
+// GỬI CHO FE
+// npm i node-cache
 // MongoDB Connection
+// nvm use 16.13.1, chuyển version nodejs về 16 để dùng
 mongoose.set("strictQuery", false);
 mongoose
     .connect(process.env.MONGODB_URL)
@@ -63,6 +68,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
+    console.log(req.body);
     const { email } = req.body;
 
     try {
@@ -153,6 +159,7 @@ app.get("/products", async (req, res) => {
 
 app.get("/productNameList", async (req, res) => {
     const data = await productModel.find({}, "category");
+    console.log(data)
     res.send(JSON.stringify(data));
 });
 
